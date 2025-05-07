@@ -1,11 +1,12 @@
 const { Pool } = require('pg');
+require('dotenv').config(); // Importa las variables del archivo .env
 
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost', // o el host de tu BD
-  database: 'siscnmma_db',
-  password: 'Abcd2025',
-  port: 5432
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: parseInt(process.env.DB_PORT, 10)
 });
 
 module.exports = pool;
