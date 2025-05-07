@@ -1,0 +1,29 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+.env
+.env.local
+.env.*.local
+
+# Vite (si compilas)
+.vite/
+
+# Editor settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS / Misc
+.DS_Store
+Thumbs.db
+*.log
+
+# Railway local config (si estás probando local)
+railway.json
