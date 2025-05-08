@@ -8,5 +8,6 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD,
   port: parseInt(process.env.DB_PORT, 10)
 });
+console.log("Entorno cargado:", process.env.DB_HOST, process.env.DB_USER);
 
 module.exports = pool;

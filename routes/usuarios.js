@@ -32,6 +32,31 @@ router.put('/estatus/:id', async (req, res) => {
   }
 });
 
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { nombre_usuario, email, password, rol } = req.body;
+
+  try {
+    if (password && password.trim() !== "") {
+      await pool.query(
+        `UPDATE usuario SET nombre_usuario = $1, email = $2, rol = $3, password = $4 WHERE id_usuario = $5`,
+        [nombre_usuario, email, rol, password, id]
+      );
+    } else {
+      await pool.query(
+        `UPDATE usuario SET nombre_usuario = $1, email = $2, rol = $3 WHERE id_usuario = $4`,
+        [nombre_usuario, email, rol, id]
+      );
+    }
+
+    res.json({ success: true, message: "Usuario actualizado correctamente" });
+  } catch (err) {
+    console.error("Error al actualizar usuario:", err);
+    res.status(500).json({ success: false, error: "Error al actualizar usuario" });
+  }
+});
+
+
 router.post('/', async (req, res) => {
   const { nombre_usuario, email, password, rol, fecha_nacimiento, sexo, id_deporte } = req.body;
 
