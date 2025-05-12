@@ -35,6 +35,21 @@ router.get("/opciones", async (req, res) => {
       res.status(500).json({ success: false, error: "Error al obtener nutriólogos" });
     }
   });
+
+  router.get("/ver-nutriologos", async (req, res) => {
+    try {
+      const result = await db.query(`
+        SELECT n.id_nutriologo AS id, n.nombre_completo, n.fecha_nacimiento, u.email, n.cedula_profesional
+        FROM nutriologo n
+        JOIN usuario u ON n.id_usuario = u.id_usuario
+        WHERE u.estatus IN (1, 2)
+      `);
+      res.json({ success: true, nutriologos: result.rows });
+    } catch (error) {
+      console.error("Error al obtener nutriólogos disponibles:", error);
+      res.status(500).json({ success: false, error: "Error al obtener nutriólogos" });
+    }
+  });
   
 
 module.exports = router;
