@@ -21,6 +21,7 @@ app.use('/api/deportes', deportesRoutes);
 app.use('/api/nutriologos', nutriologosRoutes);
 
 
+
 // Usar puerto de entorno o 3000 por defecto
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

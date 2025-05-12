@@ -36,5 +36,19 @@ router.get("/opciones", async (req, res) => {
   }
 });
 
+router.get("/listado", async (req, res) => {
+  try {
+    const result = await db.query(`
+      SELECT a.id_atleta AS id, a.nombre_completo, a.fecha_nacimiento, a.sexo, u.email
+      FROM atleta a
+      JOIN usuario u ON a.id_usuario = u.id_usuario
+      WHERE u.estatus IN (1, 2)
+    `);
+    res.json({ success: true, atletas: result.rows });
+  } catch (error) {
+    console.error("Error al obtener atletas vinculados:", error);
+    res.status(500).json({ success: false, error: "Error al obtener atletas" });
+  }
+});
 
 module.exports = router;
