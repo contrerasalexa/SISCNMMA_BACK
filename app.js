@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const path = require('path'); // 👈 importa 'path' para resolver rutas
+const path = require('path'); 
 require('dotenv').config();
 
 const pool = require('./db');
@@ -14,7 +14,6 @@ const planesRoutes = require('./routes/planes');
 const nuevoRoutes = require('./routes/nuevo_plan');
 const alimentosRoutes = require("./routes/alimentos");
 
-// 👇 Permitir CORS y JSON
 app.use(cors());
 app.use(express.json());
 app.use('/alimentos', express.static('public/alimentos'));

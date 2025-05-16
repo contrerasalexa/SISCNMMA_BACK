@@ -4,7 +4,7 @@ const db = require("../db");
 
 // Registrar nuevo nutriólogo
 router.post("/", async (req, res) => {
-  const { nombre_completo, fecha_nacimiento, cedula_profesional, email, id_usuario } = req.body;
+  const { nombre_completo, fecha_nacimiento, cedula_profesional, email} = req.body;
 
   try {
     if (!nombre_completo || !fecha_nacimiento || !cedula_profesional || !email) {
