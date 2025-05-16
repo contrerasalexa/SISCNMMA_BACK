@@ -14,7 +14,7 @@ router.post("/", async (req, res) => {
     const result = await db.query(
       `INSERT INTO nutriologo (nombre_completo, fecha_nacimiento, cedula_profesional, email)
        VALUES ($1, $2, $3, $4) RETURNING id_nutriologo`,
-      [nombre_completo, fecha_nacimiento, cedula_profesional, email, id_usuario]
+      [nombre_completo, fecha_nacimiento, cedula_profesional, email]
     );
 
     res.json({ success: true, id_nutriologo: result.rows[0].id_nutriologo });
