@@ -4,16 +4,16 @@ const db = require("../db");
 
 // Registrar nuevo nutriólogo
 router.post("/", async (req, res) => {
-  const { nombre_completo, fecha_nacimiento, cedula_profesional, email, id_usuario } = req.body;
+  const { nombre_completo, fecha_nacimiento, cedula_profesional, email} = req.body;
 
   try {
-    if (!nombre_completo || !fecha_nacimiento || !cedula_profesional || !email || !id_usuario) {
+    if (!nombre_completo || !fecha_nacimiento || !cedula_profesional || !email) {
       return res.status(400).json({ success: false, error: "Datos incompletos" });
     }
 
     const result = await db.query(
-      `INSERT INTO nutriologo (nombre_completo, fecha_nacimiento, cedula_profesional, email, id_usuario)
-       VALUES ($1, $2, $3, $4, $5) RETURNING id_nutriologo`,
+      `INSERT INTO nutriologo (nombre_completo, fecha_nacimiento, cedula_profesional, email)
+       VALUES ($1, $2, $3, $4) RETURNING id_nutriologo`,
       [nombre_completo, fecha_nacimiento, cedula_profesional, email, id_usuario]
     );
 
