@@ -42,23 +42,38 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Obtener todos los planes de un nutriólogo con nombre del atleta
-router.get("/nutriologo/:id", async (req, res) => {
-  const { id } = req.params;
+// Obtener todos los planes de un nutriólogo con nombre del atleta usando id_usuario
+router.get("/nutriologo/:id_usuario", async (req, res) => {
+  const { id_usuario } = req.params;
   try {
+    // Buscar el id_nutriologo a partir del id_usuario
+    const nutriResult = await db.query(
+      `SELECT id_nutriologo FROM nutriologo WHERE id_usuario = $1`,
+      [id_usuario]
+    );
+
+    if (nutriResult.rowCount === 0) {
+      return res.status(404).json({ success: false, error: "Nutriólogo no encontrado" });
+    }
+
+    const id_nutriologo = nutriResult.rows[0].id_nutriologo;
+
+    // Buscar los planes de ese nutriólogo
     const result = await db.query(`
-        SELECT p.*, a.nombre_completo AS nombre_atleta
-        FROM plan_alimenticio p
-        JOIN atleta a ON a.id_atleta = p.id_atleta
-        WHERE p.id_nutriologo = $1
-        ORDER BY p.fecha_creacion DESC
-      `, [id]);
-      
+      SELECT p.*, a.nombre_completo AS nombre_atleta
+      FROM plan_alimenticio p
+      JOIN atleta a ON a.id_atleta = p.id_atleta
+      WHERE p.id_nutriologo = $1
+      ORDER BY p.fecha_creacion DESC
+    `, [id_nutriologo]);
+
     res.json({ success: true, planes: result.rows });
   } catch (error) {
+    console.error("Error al obtener planes del nutriólogo:", error);
     res.status(500).json({ success: false, error: "Error al obtener los planes." });
   }
 });
+
 
 // Obtener todos los planes de un nutriólogo con nombre del atleta
 // Obtener todos los planes de un atleta usando id_usuario
