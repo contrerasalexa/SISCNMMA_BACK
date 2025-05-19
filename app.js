@@ -13,6 +13,9 @@ const nutriologosRoutes = require('./routes/nutriologos');
 const planesRoutes = require('./routes/planes');
 const nuevoRoutes = require('./routes/nuevo_plan');
 const alimentosRoutes = require("./routes/alimentos");
+const sudoracionRoutes = require("./routes/sudoracion");
+
+
 
 app.use(cors());
 app.use(express.json());
@@ -29,6 +32,7 @@ app.use('/api/nutriologos', nutriologosRoutes);
 app.use('/api/planes', planesRoutes);
 app.use('/api/nuevo_plan', nuevoRoutes);
 app.use('/api/alimentos', alimentosRoutes);
+app.use("/api/sudoracion", sudoracionRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

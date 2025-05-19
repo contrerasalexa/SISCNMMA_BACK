@@ -51,4 +51,23 @@ router.get("/listado", async (req, res) => {
   }
 });
 
+// routes/atletas.js
+router.get("/byUser/:id_usuario", async (req, res) => {
+  const { id_usuario } = req.params;
+  try {
+    const result = await db.query(
+      `SELECT id_atleta FROM atleta WHERE id_usuario = $1`,
+      [id_usuario]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ success: false, error: "Atleta no encontrado" });
+    }
+    res.json({ success: true, id_atleta: result.rows[0].id_atleta });
+  } catch (error) {
+    console.error("Error al obtener id_atleta:", error);
+    res.status(500).json({ success: false, error: "Error del servidor" });
+  }
+});
+
+
 module.exports = router;
